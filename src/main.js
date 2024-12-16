@@ -43,8 +43,14 @@ function handleSubmit(e) {
 }
 
 function handleLoadMore() {
+    const loader = document.createElement('span');
+    loader.classList.add('loader'); 
+    loadMore.insertAdjacentElement('afterend', loader);
+
     page += 1;
-    fetchImages();
+
+    fetchImages()
+        .finally(() => loader.remove());
 }
 
 async function fetchImages() {
@@ -76,10 +82,9 @@ async function fetchImages() {
 
         smoothScroll();
     } catch (error) {
-        console.error(error.message)
-        // iziToast.error({
-        //     message: 'An error occurred while fetching images. Please try again later.',
-        // });
+        iziToast.error({
+            message: 'An error occurred while fetching images. Please try again later.',
+        });
     } finally {
         loader.remove();
     }
