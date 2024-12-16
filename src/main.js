@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 import SimpleLightbox from "simplelightbox";
@@ -11,7 +11,6 @@ const container = document.querySelector('.container');
 const loadMore = document.querySelector('.load-more');
 
 const BASE_URL = 'https://pixabay.com/api/';
-const API_KEY = '47674643-19b0472e1fe1a72aec21686ba';
 
 let page = 1;
 let per_page = 15;
@@ -38,6 +37,7 @@ function handleSubmit(e) {
     container.innerHTML = '';
     page = 1;
     loadMore.classList.add('btn-hidden');
+    
     fetchImages();
     e.target.reset();
 }
@@ -76,9 +76,10 @@ async function fetchImages() {
 
         smoothScroll();
     } catch (error) {
-        iziToast.error({
-            message: 'An error occurred while fetching images. Please try again later.',
-        });
+        console.error(error.message)
+        // iziToast.error({
+        //     message: 'An error occurred while fetching images. Please try again later.',
+        // });
     } finally {
         loader.remove();
     }
