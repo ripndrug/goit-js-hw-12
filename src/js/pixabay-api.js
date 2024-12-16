@@ -1,9 +1,14 @@
-export function fetchData(url = BASE_URL) {
-    return fetch(url)
-        .then(res => {
-            if (!res.ok) {
-                throw new Error(res.statusText);
-            }
-            return res.json();
-    })
+export async function fetchData(url, query, page, per_page) {
+    const { data } = await axios.get(url, {
+        params: {
+            q: query,
+            key: API_KEY,
+            per_page,
+            page,
+            image_type: 'photo',
+            orientation: 'horizontal',
+            safesearch: true,
+        },
+    });
+    return data;
 }
